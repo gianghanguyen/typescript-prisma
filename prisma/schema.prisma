@@ -12,4 +12,14 @@ model User {
   username     String  @unique
   password  String
   name      String?
+  notes Note[]
+}
+
+model Note {
+  id        Int      @default(autoincrement()) @id
+  title     String
+  content   String?
+  published Boolean? @default(false)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
 }

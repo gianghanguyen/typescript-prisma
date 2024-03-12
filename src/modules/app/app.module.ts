@@ -9,4 +9,11 @@ import { AuthModule } from '../auth/auth.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  // set default version fot routes
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer
+  //     .apply(LoggerMiddleware)
+  //     .forRoutes({ path: 'user', method: RequestMethod.GET, version: '2' });
+  // }
+}

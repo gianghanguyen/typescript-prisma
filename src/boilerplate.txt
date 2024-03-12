@@ -1,0 +1,49 @@
+1. API versioning
+- managing and tracking changes to an API
+- have different versions of your controllers or individual routes running within the same application
+4 types
+- URI versioning: The version will be passed within the URI of the request (default)
+Example:(Used)
+app.enableVersioning({
+    type: VersioningType.URI,
+  });
+SwaggerModule.createDocument()
+- Header versioning
+app.enableVersioning({
+  type: VersioningType.HEADER,
+  header: 'Custom-Header',
+});
+
+2. Package manager: yarn
+- install: npm install --global yarn
+3. Helmet
+-  protect your app from some well-known web vulnerabilities by setting HTTP headers appropriately
+--> How: Cách hoạt động của helmet?
+một tập hợp các Middleware nhỏ làm nhiệm vụ thiết lập các Http headers liên quan đến bảo mật
+4. Cors
+- một domain chỉ được đọc và thay đổi bởi một thành phần khác cùng domain, yêu cầu từ các domain khác bị chặn
+---> cơ chế phân biệt request của các nguồn khác nhau của trình duyệt: same origin policy
+---> ngăn cản tương tác hợp lệ giữa client và server đáng tin cậy (vd: api.example.com và image.example.com là không cùng origin -> bị chặn)
+Cách hoạt động:
+*Phía client
+Khi trình duyệt gửi request tới một domain khác
+- trong http header được gắn thêm một trường origin: <domain hiện tại mà client đang ở <-> origin>
+(được tự động thêm bởi trình duyệt)
+* Phía server: Xem xét origin trong request -- nếu hợp lệ 
+-- trả về response kèm header Access-Controll-allow-origin: <.. các tên miền mà tài nguyên được yêu cầu có thể chia sẻ dữ liệu với..>
+-- trong trường hợp header Access-Control-Allow-Origin không có/không hợp lệ --> trình duyệt sẽ báo lỗi
+ -- sau đó mới thực hiện request
+ Ngoài ra, response header còn có thể có các trường:
+ - Access-Control-Allow-Methods: Danh sách các method server cho phép phía client sử dụng
+ - Access-Control-Allow_Headers: chứa danh sách header phía server đang hỗ trợ
+ - Access-Control-Max-Age: thời gian hợp lệ của preflight (* trong trường hợp request không đơn giản, trình duyệt gửi preflight - một request chứa
+ một số thông tin về yêu cầu mà trình duyệt đạng cố gắng thực hiện ---> máy chủ phải hồi và cho biết nó có chấp nhận yêu cầu đó hay không --> gửi yêu cầu thực tế hay không)
+ VD: app.enableCors(); //  access-control-allow-origin: * ---> thực hiện mọi request có domain khác được gửi tới
+5. ValidationPipe
+- pipe: xác thực, biến đổi dữ liệu,... trước khi dữ liệu được gửi tới controller
+- ValidationPipe: một pipe thực hiện việc biến dổi dữ liệu cho các request, chuyển đổi dl đầu vào thành obj tương ứng với các dto đã định nghĩa
+VD: app.useGlobalPipes(new ValidationPipe({ transform: true }));
+6. Prisma studio
+-visual editor for db 
+npx install prisma-studio
+
